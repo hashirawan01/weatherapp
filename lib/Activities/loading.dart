@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weatherapp/Model/model.dart';
 
 class Loading extends StatefulWidget {
@@ -18,7 +19,13 @@ class _LoadingState extends State<Loading> {
     late String air_speed=model.air_speed;
     late String description=model.description;
     late String mainDescription=model.mainDescription;
-    Navigator.pushNamed(context, '/home')
+    Navigator.pushReplacementNamed(context, '/home',arguments: {
+      "temprature" :temp,
+   "humidity":humidity,
+    "air_speed":air_speed,
+   "description":description,
+   "mainDescription":mainDescription,
+    });
   }
   @override
   void initState() {
@@ -28,10 +35,21 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[300
+      ],
       body: SafeArea(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
-          IconButton(onPressed:(){ Navigator.pushNamed(context, "/home");}, icon: Icon(Icons.home))
+          Center(child: Image.asset("assets/images/logo.png",height: 190,width: 190,)),
+          SizedBox(height: 10,),
+          Text("Waether app",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 30,color: Colors.white),),
+          SizedBox(height: 10,),
+          Text("Made By Hashir Awan",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w200,color: Colors.white),),
+          SizedBox(height: 40,),
+        SpinKitWave(
+          color: Colors.white,
+          size: 50.0,
+        ),
         ],
       )),
     );
