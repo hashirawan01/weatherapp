@@ -11,42 +11,60 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  String City="Lahore";
   String Temprature="loading";
-  void startApp(String cityname)async{
-    List<Location> locations = await locationFromAddress(cityname);
-      double latitude = locations[0].latitude;
-      double longitude = locations[0].longitude;
+  void startApp(String cityname) async {
+    if (cityname.isNotEmpty&&mounted) {
+      try {
+        List<Location> locations = await locationFromAddress(cityname);
+        double latitude = locations[0].latitude;
+        double longitude = locations[0].longitude;
 
-    Model model=Model(getlat: latitude, getlang: longitude);
-   await model.getData();
-    late String temp=model.temp;
-    late String humidity=model.humidity;
-    late String air_speed=model.air_speed;
-    late String description=model.description;
-    late String mainDescription=model.mainDescription;
-    late String Icon=model.icon;
-    Navigator.pushReplacementNamed(context, '/home',arguments: {
-      "temprature" :temp,
-   "humidity":humidity,
-    "air_speed":air_speed,
-   "description":description,
-   "mainDescription":mainDescription,
-      "icon":Icon,
-      "city":cityname,
-    });
+        Model model = Model(getlat: latitude, getlang: longitude);
+
+        await model.getData();
+        String temp = model.temp;
+        String humidity = model.humidity;
+        String air_speed = model.air_speed;
+        String description = model.description;
+        String mainDescription = model.mainDescription;
+        String Icon = model.icon;
+
+        Navigator.pushReplacementNamed(context, '/home', arguments: {
+          "temprature": temp,
+          "humidity": humidity,
+          "air_speed": air_speed,
+          "description": description,
+          "mainDescription": mainDescription,
+          "icon": Icon,
+          "city": cityname,
+        });
+      } catch (e) {
+        // Handle the exception and show an error message to the user
+        print("Hey babe error is: $e");
+
+      }
+    } else {
+      print("error occurred");
+    }
   }
+
   @override
   void initState() {
-    startApp("Lahore");
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    Map? info = ModalRoute.of(context)?.settings.arguments as Map;
-    if(info.isNotEmpty ??false) {
-      String cityname = info["searchText"];
-      print(cityname);
+    Map? search = ModalRoute.of(context)?.settings.arguments as Map?;
+    if (search != null && search.containsKey("searchText")) {
+      City = search["searchText"] as String;
+
     }
+
+    print("object");
+    print(City);
+    startApp(City);
     return Scaffold(
       backgroundColor: Colors.blue[300
       ],

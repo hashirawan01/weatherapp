@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
     String IconVAlue = info["icon"];
     String Cityvalue = info["city"];
     String Humvalue = info["humidity"];
-    String Airspeedvalue = info["air_speed"].toString().substring(0, 4);
+    String Airspeedvalue = info["air_speed"].toString().substring(0, 2);
     String Descvalue = info["description"];
     print(Cityvalue);
     print(IconVAlue);
@@ -74,10 +74,17 @@ class _HomeState extends State<Home> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, '/loading',
-                          arguments: {
-                            "searchText": textEditingController.text
-                          });
+                      if((textEditingController.text).replaceAll(" ", "")==("")) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Please enter any city name first")),
+                        );
+                      }else{
+                        Navigator.pushReplacementNamed(context, '/loading',
+                            arguments: {
+                              "searchText": textEditingController.text
+                            });
+
+                      }
                     },
                     child: Container(
                         child: Icon(
