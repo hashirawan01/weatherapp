@@ -10,7 +10,8 @@ void main() {
     routes: {
       '/': (context) => Loading(),
       '/home': (context) => Home(),
-      '/location': (context) => Location()
+      '/location': (context) => Location(),
+      '/loading': (context) => Loading(),
     },
   ));
 }

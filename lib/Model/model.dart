@@ -10,12 +10,13 @@ class Model {
     getlat = this.getlat;
     getlang = this.getlang;
   }
-
+late String city;
   late String temp;
   late String humidity;
   late String air_speed;
   late String description;
   late String mainDescription;
+  late String icon;
 
   Future<void> getData() async {
     Uri url = Uri.parse(
@@ -35,6 +36,7 @@ class Model {
       Map weather_main_data = weather_data[0];
       String getmain_desc = weather_main_data['main'];
       String getdesc = weather_main_data['description'];
+       icon=weather_main_data['icon'].toString();
 
       //assigning values
       temp = gettemp.toString();
